@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
-import TwitterTimeline from "./TwitterTimeline";
+import LatestNews from "./TwitterTimeline";
 
 const slides = [
   {
@@ -79,7 +79,7 @@ export default function Home() {
       {/* Latest News */}
       <section className="news-section">
         <h2 className="section-title">Latest News</h2>
-        <TwitterTimeline />
+        <LatestNews />
       </section>
 
       {/* Our Games */}
