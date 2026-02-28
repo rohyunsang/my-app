@@ -1,11 +1,13 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useLang } from "./LangContext";
 
 export default function EmailTooltip() {
     const [open, setOpen] = useState(false);
     const [copied, setCopied] = useState(false);
     const ref = useRef<HTMLDivElement>(null);
+    const { t } = useLang();
 
     useEffect(() => {
         function handleClickOutside(e: MouseEvent) {
@@ -71,7 +73,7 @@ export default function EmailTooltip() {
                             transition: "background 0.2s",
                         }}
                     >
-                        {copied ? "Copied!" : "Copy"}
+                        {copied ? t("email_copied") : t("email_copy")}
                     </button>
                 </div>
             )}

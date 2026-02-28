@@ -3,36 +3,36 @@
 import Image from "next/image";
 import { useState, useEffect, useCallback } from "react";
 import LatestNews from "./TwitterTimeline";
-
-const slides = [
-  {
-    image: "/banner1.png",
-    title: "Eclipsed Realms",
-    subtitle: "A dark fantasy RPG — Coming 2026",
-    badge: "NEW",
-  },
-  {
-    image: "/banner2.png",
-    title: "Stellar Drift",
-    subtitle: "Explore the cosmos in this open-world space adventure",
-    badge: "COMING SOON",
-  },
-  {
-    image: "/banner3.png",
-    title: "Shadow Protocol",
-    subtitle: "Stealth action in a cyberpunk mega-city",
-    badge: "IN DEVELOPMENT",
-  },
-];
-
-
+import { useLang } from "./LangContext";
 
 export default function Home() {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const { t } = useLang();
+
+  const slides = [
+    {
+      image: "/banner1.png",
+      title: t("slide1_title"),
+      subtitle: t("slide1_subtitle"),
+      badge: t("slide1_badge"),
+    },
+    {
+      image: "/banner2.png",
+      title: t("slide2_title"),
+      subtitle: t("slide2_subtitle"),
+      badge: t("slide2_badge"),
+    },
+    {
+      image: "/banner3.png",
+      title: t("slide3_title"),
+      subtitle: t("slide3_subtitle"),
+      badge: t("slide3_badge"),
+    },
+  ];
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
-  }, []);
+  }, [slides.length]);
 
   useEffect(() => {
     const timer = setInterval(nextSlide, 5000);
@@ -78,13 +78,13 @@ export default function Home() {
 
       {/* Latest News */}
       <section className="news-section">
-        <h2 className="section-title">Latest News</h2>
+        <h2 className="section-title">{t("latest_news")}</h2>
         <LatestNews />
       </section>
 
       {/* Our Games */}
       <section className="games-section">
-        <h2 className="section-title">Our Games</h2>
+        <h2 className="section-title">{t("our_games")}</h2>
         <div className="games-grid">
           {slides.map((game, index) => (
             <a key={index} href="#" className="game-card">

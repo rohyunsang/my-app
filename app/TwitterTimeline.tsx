@@ -1,42 +1,38 @@
 "use client";
 
-// ============================================
-// 🔧 뉴스를 수정하려면 아래 배열을 편집하세요!
-// title: 제목
-// desc: 설명
-// date: 날짜
-// link: 클릭 시 이동할 URL (트윗 링크, 스팀 링크 등)
-// image: 이미지 경로 (public 폴더 기준)
-// ============================================
-const NEWS_ITEMS = [
-    {
-        title: "Chapter 1 개발 완료!",
-        desc: "어두운 터널 너머에 새로운 스테이지가 기다리고 있습니다. 곧 Chapter 2 개발에 돌입합니다!",
-        date: "Feb 7, 2026",
-        link: "https://x.com/Studio_Gravitia",
-        image: "/banner1.png",
-    },
-    {
-        title: "새로운 스테이지 공개",
-        desc: "이동 중 갑자기 이상한 구조물이 길을 막았습니다... 지진이다! 새로운 장애물 시스템을 만나보세요.",
-        date: "Jan 26, 2026",
-        link: "https://x.com/Studio_Gravitia",
-        image: "/banner2.png",
-    },
-    {
-        title: "2026년 개발 로드맵",
-        desc: "올해의 개발 계획과 목표를 공유합니다. 많은 응원 부탁드립니다!",
-        date: "Jan 2, 2026",
-        link: "https://x.com/Studio_Gravitia",
-        image: "/banner3.png",
-    },
-];
+import { useLang } from "./LangContext";
 
 export default function LatestNews() {
+    const { t } = useLang();
+
+    const newsItems = [
+        {
+            title: t("news1_title"),
+            desc: t("news1_desc"),
+            date: t("news1_date"),
+            link: "https://x.com/Studio_Gravitia",
+            image: "/banner1.png",
+        },
+        {
+            title: t("news2_title"),
+            desc: t("news2_desc"),
+            date: t("news2_date"),
+            link: "https://x.com/Studio_Gravitia",
+            image: "/banner2.png",
+        },
+        {
+            title: t("news3_title"),
+            desc: t("news3_desc"),
+            date: t("news3_date"),
+            link: "https://x.com/Studio_Gravitia",
+            image: "/banner3.png",
+        },
+    ];
+
     return (
         <div>
             <div className="news-grid">
-                {NEWS_ITEMS.map((item, index) => (
+                {newsItems.map((item, index) => (
                     <a
                         key={index}
                         href={item.link}
@@ -84,7 +80,7 @@ export default function LatestNews() {
                         e.currentTarget.style.background = "transparent";
                     }}
                 >
-                    𝕏 Follow @Studio_Gravitia for more →
+                    {t("follow_btn")}
                 </a>
             </div>
         </div>
