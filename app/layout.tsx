@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import EmailTooltip from "./EmailTooltip";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,18 +32,16 @@ export default function RootLayout({
         {/* Top Bar */}
         <div className="top-bar">
           <div className="social-icons">
-            <a href="#" aria-label="Twitter / X" title="Twitter / X">
+            <a href="https://x.com/Studio_Gravitia" target="_blank" rel="noopener noreferrer" aria-label="Twitter / X" title="Twitter / X">
               𝕏
             </a>
-            <a href="#" aria-label="YouTube" title="YouTube">
+            <a href="https://www.youtube.com/@Gravitia.studio" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube">
               ▶
             </a>
-            <a href="#" aria-label="Discord" title="Discord">
+            <a href="https://discord.gg/ZBhqSnddbR" target="_blank" rel="noopener noreferrer" aria-label="Discord" title="Discord">
               💬
             </a>
-            <a href="#" aria-label="Email" title="Email">
-              ✉
-            </a>
+            <EmailTooltip />
           </div>
           <div className="lang-switch">
             <a href="#" className="active">
