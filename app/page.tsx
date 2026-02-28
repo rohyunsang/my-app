@@ -1,65 +1,142 @@
+"use client";
+
 import Image from "next/image";
+import { useState, useEffect, useCallback } from "react";
+
+const slides = [
+  {
+    image: "/banner1.png",
+    title: "Eclipsed Realms",
+    subtitle: "A dark fantasy RPG — Coming 2026",
+    badge: "NEW",
+  },
+  {
+    image: "/banner2.png",
+    title: "Stellar Drift",
+    subtitle: "Explore the cosmos in this open-world space adventure",
+    badge: "COMING SOON",
+  },
+  {
+    image: "/banner3.png",
+    title: "Shadow Protocol",
+    subtitle: "Stealth action in a cyberpunk mega-city",
+    badge: "IN DEVELOPMENT",
+  },
+];
+
+const newsItems = [
+  {
+    image: "/banner1.png",
+    date: "Feb 28, 2026",
+    title: "Eclipsed Realms — First Look Trailer Revealed",
+    desc: "Watch the debut cinematic trailer for our upcoming dark fantasy RPG, showcasing stunning environments and real-time combat.",
+  },
+  {
+    image: "/banner2.png",
+    date: "Feb 15, 2026",
+    title: "Stellar Drift Enters Closed Beta",
+    desc: "Sign up now for a chance to explore the galaxy before anyone else. Limited spots available for early testers.",
+  },
+  {
+    image: "/banner3.png",
+    date: "Jan 30, 2026",
+    title: "Shadow Protocol Dev Diary #3",
+    desc: "Our team dives deep into the stealth mechanics and AI systems powering the next generation of action gameplay.",
+  },
+];
 
 export default function Home() {
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(nextSlide, 5000);
+    return () => clearInterval(timer);
+  }, [nextSlide]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <>
+      {/* Hero Slider */}
+      <section className="hero-section">
+        <div className="hero-slider">
+          {slides.map((slide, index) => (
+            <div
+              key={index}
+              className={`slide ${index === currentSlide ? "active" : ""}`}
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+              <Image
+                src={slide.image}
+                alt={slide.title}
+                fill
+                style={{ objectFit: "cover" }}
+                priority={index === 0}
+              />
+              <span className="slide-badge">{slide.badge}</span>
+              <div className="slide-overlay">
+                <h2 className="game-title">{slide.title}</h2>
+                <p className="game-subtitle">{slide.subtitle}</p>
+              </div>
+            </div>
+          ))}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+        <div className="slider-dots">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={index === currentSlide ? "active" : ""}
+              onClick={() => setCurrentSlide(index)}
+              aria-label={`Go to slide ${index + 1}`}
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+          ))}
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* Latest News */}
+      <section className="news-section">
+        <h2 className="section-title">Latest News</h2>
+        <div className="news-grid">
+          {newsItems.map((item, index) => (
+            <a key={index} href="#" className="news-card">
+              <Image
+                src={item.image}
+                alt={item.title}
+                width={400}
+                height={225}
+                className="news-card-image"
+              />
+              <div className="news-card-body">
+                <div className="news-card-date">{item.date}</div>
+                <h3 className="news-card-title">{item.title}</h3>
+                <p className="news-card-desc">{item.desc}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Our Games */}
+      <section className="games-section">
+        <h2 className="section-title">Our Games</h2>
+        <div className="games-grid">
+          {slides.map((game, index) => (
+            <a key={index} href="#" className="game-card">
+              <Image
+                src={game.image}
+                alt={game.title}
+                fill
+                style={{ objectFit: "cover" }}
+              />
+              <div className="game-card-overlay">
+                <h3>{game.title}</h3>
+                <p>{game.subtitle}</p>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
